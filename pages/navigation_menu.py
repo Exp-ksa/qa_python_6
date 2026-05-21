@@ -13,6 +13,7 @@ class NavigationMenu:
     def __init__(self, driver):
         self.driver = driver
 
+    @allure.step('Нажимаем на кнопку принятия cookie')
     def click_cookie_button(self):
         self.driver.find_element(*Main_Locator.COOKIE_BUTTON).click()
 
