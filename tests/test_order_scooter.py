@@ -1,7 +1,6 @@
 import allure
 import pytest
 
-from locators.locator import Main_Locator
 from pages.order_page import OrderPageScooter
 from data import Credentials_1, Credentials_2
 
@@ -20,8 +19,8 @@ class TestOrderScooter:
     @allure.link('https://qa-scooter.praktikum-services.ru/order', name='Страница заказа')
     @pytest.mark.parametrize('first_name, last_name, address, station, phone, date, rental, color, comments_courier, button', 
                              [
-                                 [Credentials_1.first_name, Credentials_1.last_name, Credentials_1.address, Credentials_1.station, Credentials_1.phone, Credentials_1.date, Credentials_1.rental, Credentials_1.color, Credentials_1.comments_courier, Main_Locator.BUTTON_ORDER], 
-                                 [Credentials_2.first_name, Credentials_2.last_name, Credentials_2.address, Credentials_2.station, Credentials_2.phone, Credentials_2.date, Credentials_2.rental, Credentials_2.color, Credentials_2.comments_courier, Main_Locator.BIG_BUTTON_ORDER]
+                                 [Credentials_1.first_name, Credentials_1.last_name, Credentials_1.address, Credentials_1.station, Credentials_1.phone, Credentials_1.date, Credentials_1.rental, Credentials_1.color, Credentials_1.comments_courier, Credentials_1.button], 
+                                 [Credentials_2.first_name, Credentials_2.last_name, Credentials_2.address, Credentials_2.station, Credentials_2.phone, Credentials_2.date, Credentials_2.rental, Credentials_2.color, Credentials_2.comments_courier, Credentials_2.button]
                              ])
     def test_scooter_order_positive_flow(self, main_page, first_name, last_name, address, station, phone, date, rental, color, comments_courier, button):
         

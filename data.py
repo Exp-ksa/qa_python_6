@@ -1,7 +1,7 @@
 import random
 
 from datetime import datetime, timedelta
-from locators.locator import Order_Page_locator
+from locators.locator import Order_Page_locator, Main_Locator
 
 class Credentials_1:
     first_name = "Кузьма"
@@ -13,6 +13,7 @@ class Credentials_1:
     rental = "двое суток"
     color = Order_Page_locator.CHOICE_COLOR_SCOOTER_BLACK
     comments_courier = "Позвоните за 30 минут до приезда"
+    button = Main_Locator.BUTTON_ORDER
 
 class Credentials_2:
     first_name = "Яна"
@@ -24,3 +25,4 @@ class Credentials_2:
     rental = "семеро"
     color = Order_Page_locator.CHOICE_COLOR_SCOOTER_GREY
     comments_courier = "Вход со двора, второй подъезд"    
+    button = Main_Locator.BIG_BUTTON_ORDER
