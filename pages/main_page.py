@@ -1,9 +1,7 @@
 import allure
-from selenium import webdriver
-from selenium.webdriver.common.by import By
+
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from locators.locator import Main_Page_Locator, Main_Locator
 from pages.navigation_menu import NavigationMenu
 
 # Класс вопросы о важном
