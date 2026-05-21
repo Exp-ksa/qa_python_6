@@ -9,9 +9,9 @@ from url import MAIN_URL, ORDER_URL, TRACK_URL
 @pytest.fixture(scope="function")
 def driver():
     options = Options()
-    options.add_argument('--start-maximized') 
     options.add_argument('--disable-popup-blocking')  # Отключить блокировку всплывающих окон
     driver = webdriver.Firefox(options=options)
+    driver.maximize_window()
 
     driver.implicitly_wait(5)
     yield driver

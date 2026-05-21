@@ -8,7 +8,7 @@ class Main_Locator:
     BUTTON_ORDER = (By.XPATH, "//button[contains(@class, 'Button_Button') and text()='Заказать']")
     ORDER_STATUS = (By.CLASS_NAME, "Header_Link__1TAG7")
     HEADER_SCOOTER = (By.CLASS_NAME, "Home_Header__iJKdX")
-    BIG_BUTTON_ORDER = (By.XPATH, "//button[contains(@class, 'UltraBig') and contains(text(), 'Заказать')]")
+    BIG_BUTTON_ORDER = (By.XPATH, "//div[@class = 'Home_FinishButton__1_cWm']/button[contains(text(), 'Заказать')]")
     BACK_SCOOTER_TEXT = (By.XPATH, ".//div[@class = 'Home_Status__YkfmH' and text() = 'Курьер забирает самокат']")
     COOKIE_BUTTON = (By.XPATH, ".//button[@id = 'rcc-confirm-button']")
         

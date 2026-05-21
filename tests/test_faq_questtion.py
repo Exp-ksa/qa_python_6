@@ -34,6 +34,7 @@ class TestFaqQuesttion:
         driver = main_page
         
         faq_page = MainPageScooterFAQ(driver)
+        faq_page.click_cookie_button()
         
         faq_page.find_questtion(questtion)
         
