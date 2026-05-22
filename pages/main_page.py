@@ -1,29 +1,25 @@
 import allure
 
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
-from pages.navigation_menu import NavigationMenu
+from pages.base_page import BasePage
+from locators.main_page_locator import Main_Page_Locator
+from locators.header_locator import Header_Locator
 
 # Класс вопросы о важном
-class MainPageScooterFAQ(NavigationMenu):
+class MainPageScooterFAQ(BasePage):
 
-    def __init__(self, driver):
-        super().__init__(driver)
-    
-    @allure.step('Ищем вопрос и скроллим к нему: {locator}')
-    # Поиск вопроса
-    def find_questtion(self, locator):
-        self.driver.execute_script("arguments[0].scrollIntoView();", self.driver.find_element(*locator))
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(locator))
-
-    @allure.step('Нажимаем по вопросу: {locator}')
-    # Клик по вопросу
+         
     def click_questtion(self, locator):
-        self.driver.find_element(*locator).click()
+        self.click_element(locator)
 
-    @allure.step('Получаем текст ответа: {locator}')
-    # Получение текста ответа на вопрос
-    def get_answer_text(self, locator):
-        answer_text = WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located(locator))
-        return answer_text.text
+    @allure.step('Нажимаем кнопку принятия cookie')
+    def click_cookie(self):
+        self.click_element(Header_Locator.COOKIE_BUTTON)
+
+    def find_questtion_get_answer(self, quest, answer):
+        quest = (Main_Page_Locator.FAQ_QUESTION[0], Main_Page_Locator.FAQ_QUESTION[1].format(quest))
+        answer = (Main_Page_Locator.FAQ_ANSWER[0], Main_Page_Locator.FAQ_ANSWER[1].format(answer))
+        self.scroll_to_element(quest)
+        self.wait_for_element_visible(quest)
+        self.click_questtion(quest)
         
+        return self.get_text_from_element(answer)

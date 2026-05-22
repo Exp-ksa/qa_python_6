@@ -4,110 +4,107 @@ import allure
 #from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from locators.locator import Order_Page_locator
-from pages.navigation_menu import NavigationMenu
+from locators.order_page_locator import Order_Page_locator
+from locators.header_locator import Header_Locator
+from locators.main_page_locator import Main_Page_Locator
+from pages.base_page import BasePage
 
 # Класс страницы заказа самоката
-class OrderPageScooter(NavigationMenu):
-    
-    def __init__(self, driver):
-        super().__init__(driver)
+class OrderPageScooter(BasePage):
 
-    @allure.step('Ожидание загрузки страницы')
+    @allure.step('Нажимаем кнопку принятия cookie')
+    def click_cookie(self):
+        self.click_element(Header_Locator.COOKIE_BUTTON)
+    
     def wait_order_url(self):
-        WebDriverWait(self.driver, 10).until(EC.visibility_of_element_located(Order_Page_locator.WHO_IS_SCOOTER_TEXT))
-
-    @allure.step('Проверка страницы заказа самоката')
-    # Проверка страницы заказа самоката
+        self.wait_for_element_visible(Order_Page_locator.WHO_IS_SCOOTER_TEXT)
+        
     def check_url_order(self):
-        return self.driver.current_url
+        return self.get_current_url()
 
-    @allure.step('Ввод имени в поле "Имя"')
-    # Ввод имени в поле "Имя"
     def set_fist_name(self, first_name):
-        self.driver.find_element(*Order_Page_locator.NAME_FIELD).clear()
-        self.driver.find_element(*Order_Page_locator.NAME_FIELD).send_keys(first_name)
-    
-    @allure.step('Ввод имени в поле "Фамилия"')
-    # Ввод фамилии в поле "Фамилия"
+        self.send_keys_to_element(Order_Page_locator.NAME_FIELD, first_name)
+
     def set_last_name(self, last_name):
-        self.driver.find_element(*Order_Page_locator.LAST_NAME_FIELD).clear()
-        self.driver.find_element(*Order_Page_locator.LAST_NAME_FIELD).send_keys(last_name)
-    
-    @allure.step('Ввод имени в поле "Адрес"')
-    # Ввод адреса в поле "Адрес"
+        self.send_keys_to_element(Order_Page_locator.LAST_NAME_FIELD, last_name)
+            
     def set_address(self, address):
-        self.driver.find_element(*Order_Page_locator.ADRESS_FIELD).clear()
-        self.driver.find_element(*Order_Page_locator.ADRESS_FIELD).send_keys(address)
-    
-    @allure.step('Выбор станции метро')
-    # Выбор станции метро
+        self.send_keys_to_element(Order_Page_locator.ADRESS_FIELD, address)
+            
     def click_choice_metro(self, station):
-        self.driver.find_element(*Order_Page_locator.METRO_FIELD).click()
+        self.click_element(Order_Page_locator.METRO_FIELD)
         locator = (Order_Page_locator.CHOICE_METRO_BUTTON[0], Order_Page_locator.CHOICE_METRO_BUTTON[1].format(station))
-        WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located(locator))
-        self.driver.execute_script("arguments[0].scrollIntoView();", self.driver.find_element(*locator))
-        self.driver.find_element(*locator).click()
+        self.wait_for_element_visible(locator)
+        self.scroll_to_element(locator)
+        self.click_element(locator)
     
-    @allure.step('Ввод телефонного номера')
-    # Ввод телефонного номера
     def set_phone(self, phone):
-        self.driver.find_element(*Order_Page_locator.PHONE_FIELD).clear()
-        self.driver.find_element(*Order_Page_locator.PHONE_FIELD).send_keys(phone)
-    
-    @allure.step('Клик по кнопке "Далее"')
-    # Клик по кнопке "Далее"
+        self.send_keys_to_element(Order_Page_locator.PHONE_FIELD, phone)
+
     def click_next_button(self):
-        self.driver.find_element(*Order_Page_locator.NEXT_BUTTON).click()
+        self.click_element(Order_Page_locator.NEXT_BUTTON)
     
-    @allure.step('Ввод даты в поле "Когда привезти самокат"')
-    # Ввод даты в поле "Когда привезти самокат"   
+    @allure.step('Заполнение формы для кого самокат')
+    def fill_who_scooter_form(self, first_name, last_name, address, station, phone):
+        self.set_fist_name(first_name)
+        self.set_last_name(last_name)
+        self.set_address(address)
+        self.click_choice_metro(station)
+        self.set_phone(phone)
+        self.click_next_button()
+    
+      
     def set_date_rental(self, date):
-        self.driver.find_element(*Order_Page_locator.DATE_FIELD).clear()
-        self.driver.find_element(*Order_Page_locator.DATE_FIELD).send_keys(date)
-    
-    @allure.step('Выбор срока аренды')
-    # Выбор срока аренды
+        self.send_keys_to_element(Order_Page_locator.DATE_FIELD, date)
+            
     def click_rental_time(self, rental):
-        self.driver.find_element(*Order_Page_locator.RENTAL_TIME_FEILD).click()
+        self.click_element(Order_Page_locator.RENTAL_TIME_FEILD)
         locator = (Order_Page_locator.CHOICE_RENTAL_TIME_BUTTON[0], Order_Page_locator.CHOICE_RENTAL_TIME_BUTTON[1].format(rental))
-        WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located(locator))
-        self.driver.execute_script("arguments[0].scrollIntoView();", self.driver.find_element(*locator))
-        self.driver.find_element(*locator).click()
+        self.wait_for_element_visible(locator)
+        self.scroll_to_element(locator)
+        self.click_element(locator)
     
-    @allure.step('Выбор цвета самоката')
-    # Выбор цвета самоката   
     def click_color_scooter(self, color):
-        self.driver.find_element(*color).click()
+        self.click_element(color)
     
-    @allure.step('Ввод комментария в поле "Комментарий"')
-    # Ввод комментария в поле "Комментарий"
     def set_coments_courier(self, comment):
-        self.driver.find_element(*Order_Page_locator.COMMENTS_FIELD).send_keys(comment)
+        self.send_keys_to_element(Order_Page_locator.COMMENTS_FIELD, comment)
     
-    @allure.step('Клик по кнопке "Заказать"')
-    # Клик по кнопке "Заказать"
     def click_order_button(self):
-        self.driver.find_element(*Order_Page_locator.ORDER_BUTTON).click()
+        self.click_element(Order_Page_locator.ORDER_BUTTON)
+    
+    @allure.step('Заполнение формы "Про аренду"')
+    def fill_rent_form(self, date, rental, color, comment):
+        self.set_date_rental(date)
+        self.click_rental_time(rental)
+        self.click_color_scooter(color)
+        self.set_coments_courier(comment)
+        self.click_order_button()
     
     @allure.step('Ожидание окна "Хотите оформить заказ?"')
     # Ожидание окна "Хотите оформить заказ?"
     def wait_popup_order(self):
-        WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located(Order_Page_locator.POPUP_QUESTION_ORDER))
+        self.wait_for_element_visible(Order_Page_locator.POPUP_QUESTION_ORDER)
     
-    @allure.step('Клик по кнопке "Да"')
     # Клик по кнопке "Да"
     def click_order_yes(self):
-        self.driver.find_element(*Order_Page_locator.BUTTON_ORDER_YES).click()
+        self.click_element(Order_Page_locator.BUTTON_ORDER_YES)
     
     @allure.step('Ожидание окна "Заказ оформлен"')
     # Ожидание окна "Заказ оформлен"
     def wait_order_placed(self):
-        WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located(Order_Page_locator.ORDER_PLACED_TEXT))
+        self.wait_for_element_visible(Order_Page_locator.ORDER_PLACED_TEXT)
 
     @allure.step('Получение текста "Заказ оформлен"')    
     def get_order_placed_text(self):
-        order = WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located(Order_Page_locator.ORDER_PLACED_TEXT))
-        return order.text
+        return self.get_text_from_element(Order_Page_locator.ORDER_PLACED_TEXT)
     
-        
+    @allure.step('Клик по кнопке заказа {button}')
+    def click_main_page_order_button(self, button):
+        if button == Header_Locator.BUTTON_ORDER:
+            self.scroll_to_element(button)
+            self.click_element(button)
+        else:
+            self.wait_for_element_visible(button)
+            self.scroll_to_element(button)
+            self.click_element(button)    

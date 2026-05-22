@@ -1,0 +1,25 @@
+from selenium.webdriver.common.by import By
+       
+class Order_Page_locator:
+    WHO_IS_SCOOTER_TEXT = (By.CLASS_NAME, "Order_Header__BZXOb")
+    NAME_FIELD = (By.XPATH, ".//input[contains(@placeholder, 'Имя')]")
+    LAST_NAME_FIELD = (By.XPATH, ".//input[contains(@placeholder, 'Фамилия')]")
+    ADRESS_FIELD = (By.XPATH, ".//input[contains(@placeholder, 'Адрес')]")
+    METRO_FIELD = (By.CLASS_NAME, "select-search__input")
+    CHOICE_METRO_BUTTON = (By.XPATH, ".//button[@value = '{}']")  
+    PHONE_FIELD = (By.XPATH, ".//input[contains(@placeholder, 'Телефон')]")
+    NEXT_BUTTON = (By.XPATH, ".//button[contains(@class, 'Button_Middle__1CSJM') and text() = 'Далее']") 
+    DATE_FIELD = (By.XPATH, ".//div[@class = 'react-datepicker__input-container']/input[contains(@placeholder, 'Когда')]")  
+    RENTAL_TIME_FEILD = (By.XPATH, ".//span[@class = 'Dropdown-arrow']")
+    CHOICE_RENTAL_TIME_BUTTON = (By.XPATH, ".//div[@class = 'Dropdown-menu']/div[contains(text(),'{}')]")
+    CHOICE_COLOR_SCOOTER_BLACK = (By.ID, 'black')
+    CHOICE_COLOR_SCOOTER_GREY = (By.ID, 'grey')
+    COMMENTS_FIELD = (By.XPATH, ".//input[contains(@placeholder, 'Комментарий')]")
+    ORDER_BUTTON = (By.XPATH, ".//button[contains(@class, 'Button_Middle__1CSJM') and text() = 'Заказать']")
+    BACK_BUTTON = (By.XPATH, ".//button[contains(@class, 'Button_Inverted__3IF-i')]") 
+    POPUP_QUESTION_ORDER = (By.CLASS_NAME, 'Order_ModalHeader__3FDaJ')
+    BUTTON_ORDER_YES = (By.XPATH, ".//button[contains(@class, 'Button_Middle__1CSJM') and text() = 'Да']")
+    BUTTON_ORDER_NO = (By.XPATH, ".//button[contains(@class, 'Button_Middle__1CSJM') and text() = 'Нет']")
+    ORDER_PLACED_TEXT = (By.XPATH, "//div[contains(@class, 'Order_ModalHeader') and contains(text(), 'Заказ оформлен')]")
+    BUTTON_STATUS = (By.XPATH, ".//button[contains(@class, 'Button_Middle__1CSJM') and text() = 'Посмотреть статус']")
+

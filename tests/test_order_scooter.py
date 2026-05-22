@@ -26,25 +26,17 @@ class TestOrderScooter:
         
         driver = main_page
         order_page = OrderPageScooter(driver)
-        order_page.click_cookie_button()
+        order_page.click_cookie()
         
         order_page.click_main_page_order_button(button)
         order_page.wait_order_url()
 
         assert 'order' in order_page.check_url_order()
 
-        order_page.set_fist_name(first_name)
-        order_page.set_last_name(last_name)
-        order_page.set_address(address)
-        order_page.click_choice_metro(station)
-        order_page.set_phone(phone)
-        order_page.click_next_button()
+        order_page.fill_who_scooter_form(first_name, last_name, address, station, phone)
 
-        order_page.set_date_rental(date)
-        order_page.click_rental_time(rental)
-        order_page.click_color_scooter(color)
-        order_page.set_coments_courier(comments_courier)
-        order_page.click_order_button()
+        order_page.fill_rent_form(date, rental, color, comments_courier)
+
         order_page.wait_popup_order()
         order_page.click_order_yes()
         order_page.wait_order_placed()

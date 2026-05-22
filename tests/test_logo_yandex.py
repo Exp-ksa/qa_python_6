@@ -1,7 +1,7 @@
 import allure
 import pytest
 
-from pages.navigation_menu import NavigationMenu
+from pages.header_menu import NavigationTransitions
 
 @allure.epic('Тестирование сервиса аренды самокатов')
 @allure.feature('Переходы по лого')
@@ -23,9 +23,9 @@ class TestLinkScooter:
     def test_link_scooter_from_page_open_main_page(self, request, page_fixture, page_name):
         # Получаем фикстуру по имени
         driver = request.getfixturevalue(page_fixture)
-        link_page = NavigationMenu(driver)
+        link_page = NavigationTransitions(driver)
 
-        link_page.click_yandex_logo_and_switch_to_new_tab()
+        url = link_page.click_yandex_logo_and_switch_to_new_tab()
         
-        assert 'dzen.ru' in driver.current_url
+        assert 'dzen.ru' in url
     

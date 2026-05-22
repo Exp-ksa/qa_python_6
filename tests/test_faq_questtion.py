@@ -1,15 +1,15 @@
 import allure
 import pytest
 
-from locators.locator import Main_Page_Locator
 from pages.main_page import MainPageScooterFAQ
+from data import Quest
 
 @allure.epic('Тестирование сервиса аренды самокатов')
 @allure.feature('Раздел "Вопросы о важном"')
 class TestFaqQuesttion:
     
     @allure.story('Проверка аккордеона FAQ')
-    @allure.title('При клике на вопрос "{questtion}" отображается соответствующий ответ')
+    @allure.title('При клике на вопрос "{quest}" отображается соответствующий ответ')
     @allure.description('''
         Тест проверяет, что:
         1. При клике на вопрос в разделе FAQ открывается соответствующий текст
@@ -18,28 +18,24 @@ class TestFaqQuesttion:
     @allure.severity(allure.severity_level.CRITICAL)
     @allure.tag('FAQ', 'Accordion', 'Smoke')
     @allure.link('https://qa-scooter.praktikum-services.ru', name='Главная страница')
-    @pytest.mark.parametrize('questtion, answer, answer_text', 
+    @pytest.mark.parametrize('questtion, answer, quest, answer_text', 
                              [
-                                 [Main_Page_Locator.FAQ_QUESTION_PRICE, Main_Page_Locator.FAQ_ANSWER_PRICE, 'Сутки — 400 рублей. Оплата курьеру — наличными или картой.'], 
-                                 [Main_Page_Locator.FAQ_QUESTION_SEVERAL_SCOOTERS, Main_Page_Locator.FAQ_ANSWER_SEVERAL_SCOOTERS,'Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, можете просто сделать несколько заказов — один за другим.'],
-                                 [Main_Page_Locator.FAQ_QUESTION_TIME, Main_Page_Locator.FAQ_ANSWER_TIME, 'Допустим, вы оформляете заказ на 8 мая. Мы привозим самокат 8 мая в течение дня. Отсчёт времени аренды начинается с момента, когда вы оплатите заказ курьеру. Если мы привезли самокат 8 мая в 20:30, суточная аренда закончится 9 мая в 20:30.'],
-                                 [Main_Page_Locator.FAQ_QUESTION_ORDER_TODAY, Main_Page_Locator.FAQ_ANSWER_ORDER_TODAY, 'Только начиная с завтрашнего дня. Но скоро станем расторопнее.'],
-                                 [Main_Page_Locator.FAQ_QUESTION_EXTEND_RETURN, Main_Page_Locator.FAQ_ANSWER_EXTEND_RETURN, 'Пока что нет! Но если что-то срочное — всегда можно позвонить в поддержку по красивому номеру 1010.'],
-                                 [Main_Page_Locator.FAQ_QUESTION_CHARGE, Main_Page_Locator.FAQ_ANSWER_CHARGE, 'Самокат приезжает к вам с полной зарядкой. Этого хватает на восемь суток — даже если будете кататься без передышек и во сне. Зарядка не понадобится.'],
-                                 [Main_Page_Locator.FAQ_QUESTION_CANCEL_ORDER, Main_Page_Locator.FAQ_ANSWER_CANCEL_ORDER, 'Да, пока самокат не привезли. Штрафа не будет, объяснительной записки тоже не попросим. Все же свои.'],
-                                 [Main_Page_Locator.FAQ_QUESTION_MKAD, Main_Page_Locator.FAQ_ANSWER_MKAD, 'Да, обязательно. Всем самокатов! И Москве, и Московской области.']
+                                 ['0', '0', Quest.quest_0, Quest.answer_0], 
+                                 ['1', '1', Quest.quest_1, Quest.answer_1],
+                                 ['2', '2', Quest.quest_2, Quest.answer_2],
+                                 ['3', '3', Quest.quest_3, Quest.answer_3],
+                                 ['4', '4', Quest.quest_4, Quest.answer_4],
+                                 ['5', '5', Quest.quest_5, Quest.answer_5],
+                                 ['6', '6', Quest.quest_6, Quest.answer_6],
+                                 ['7', '7', Quest.quest_7, Quest.answer_7]
                              ])
-    def test_faq_accordion_opens_correct_answer(self, main_page, questtion, answer, answer_text):
+    def test_faq_accordion_opens_correct_answer(self, main_page, questtion, answer, quest, answer_text):
         
         driver = main_page
         
         faq_page = MainPageScooterFAQ(driver)
-        faq_page.click_cookie_button()
+        faq_page.click_cookie()
         
-        faq_page.find_questtion(questtion)
-        
-        faq_page.click_questtion(questtion)
-        
-        actual_text = faq_page.get_answer_text(answer)
+        actual_text = faq_page.find_questtion_get_answer(questtion, answer)
         
         assert actual_text == answer_text

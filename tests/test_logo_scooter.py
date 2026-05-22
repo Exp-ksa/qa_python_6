@@ -1,7 +1,7 @@
 import allure
 import pytest
 
-from pages.navigation_menu import NavigationMenu
+from pages.header_menu import NavigationTransitions
 
 @allure.epic('Тестирование сервиса аренды самокатов')
 @allure.feature('Переходы по лого')
@@ -23,10 +23,12 @@ class TestLinkScooter:
     def test_link_scooter_from_page_open_main_page(self, request, page_fixture, page_name):
         # Получаем фикстуру по имени
         driver = request.getfixturevalue(page_fixture)
-        link_page = NavigationMenu(driver)
+        link_page = NavigationTransitions(driver)
 
         link_page.click_scooter_logo()
-        link_page.wait_header_scooter()
-        
-        assert 'Самокат' in link_page.get_header_scooter_text()
+        text = link_page.get_header_scooter_text()
+        url = link_page.get_current_url_scooter()
+
+        assert 'Самокат' in text
+        assert url == 'https://qa-scooter.praktikum-services.ru/'
     
