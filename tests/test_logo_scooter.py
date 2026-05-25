@@ -2,6 +2,7 @@ import allure
 import pytest
 
 from pages.header_menu import NavigationTransitions
+from url import MAIN_URL
 
 @allure.epic('Тестирование сервиса аренды самокатов')
 @allure.feature('Переходы по лого')
@@ -30,5 +31,5 @@ class TestLinkScooter:
         url = link_page.get_current_url_scooter()
 
         assert 'Самокат' in text
-        assert url == 'https://qa-scooter.praktikum-services.ru/'
+        assert url == MAIN_URL
     
